@@ -216,7 +216,7 @@ fun HostEditScreen(hostId: Long, onDone: () -> Unit) {
                 TextButton(onClick = {
                     scope.launch {
                         container.db.hosts().delete(draft())
-                        Shortcuts.refresh(context)
+                        Surfaces.refresh(context)
                         onDone()
                     }
                 }) { Text("Delete") }
