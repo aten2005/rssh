@@ -42,6 +42,11 @@ adb install app/build/outputs/apk/debug/app-debug.apk
 Unit tests cover the host-key verifier and the SSH runner against an in-process Apache MINA
 server, so no device is needed for them.
 
+GitHub Actions runs the same build on every push and pull request and uploads the debug APK as
+the `rssh-debug-apk` artifact. Pushing a `v*` tag also attaches it to a GitHub release. Debug
+builds are signed with the committed `app/debug.keystore`, so CI and local builds install over
+each other.
+
 ## Stack
 
 Kotlin, Jetpack Compose (Material 3), Glance widgets, Room, WorkManager, [sshj](https://github.com/hierynomus/sshj)
