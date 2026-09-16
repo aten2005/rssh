@@ -22,5 +22,62 @@
             </intent-filter>
         </activity>
 
+        <service
+            android:name=".tile.SlotTileService0"
+            android:exported="true"
+            android:icon="@drawable/ic_tile"
+            android:label="@string/tile_label_1"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+            <meta-data android:name="android.service.quicksettings.TOGGLEABLE_TILE" android:value="false" />
+        </service>
+        <service
+            android:name=".tile.SlotTileService1"
+            android:exported="true"
+            android:icon="@drawable/ic_tile"
+            android:label="@string/tile_label_2"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+            <meta-data android:name="android.service.quicksettings.TOGGLEABLE_TILE" android:value="false" />
+        </service>
+        <service
+            android:name=".tile.SlotTileService2"
+            android:exported="true"
+            android:icon="@drawable/ic_tile"
+            android:label="@string/tile_label_3"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+            <meta-data android:name="android.service.quicksettings.TOGGLEABLE_TILE" android:value="false" />
+        </service>
+        <service
+            android:name=".tile.SlotTileService3"
+            android:exported="true"
+            android:icon="@drawable/ic_tile"
+            android:label="@string/tile_label_4"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+            <meta-data android:name="android.service.quicksettings.TOGGLEABLE_TILE" android:value="false" />
+        </service>
+        <service
+            android:name=".tile.SlotTileService4"
+            android:exported="true"
+            android:icon="@drawable/ic_tile"
+            android:label="@string/tile_label_5"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+            <meta-data android:name="android.service.quicksettings.TOGGLEABLE_TILE" android:value="false" />
+        </service>
+
+
     </application>
 </manifest>
