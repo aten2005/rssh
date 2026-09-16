@@ -1,0 +1,48 @@
+# rssh
+
+Run SSH commands on your servers with one tap — from Quick Settings tiles or a home-screen widget.
+
+Configure hosts and commands in the app, then:
+
+- **Quick Settings tiles** — five tiles (`rssh 1`–`rssh 5`) that each run one command. Assign
+  commands under the *Tiles* tab, then add the tiles from the Quick Settings editor.
+- **Home-screen widget** — add the *rssh command* widget from your launcher; it asks which command
+  to run when you place it.
+
+Each run ends with a toast: `✓ label: first line of output` or `✗ label (exit N): error`.
+
+## Setup
+
+1. Open the app and tap the lock icon to generate an Ed25519 key pair.
+2. Copy the public key line into `~/.ssh/authorized_keys` on each host.
+3. Add the host, tap **Test connection**, and confirm the fingerprint it shows against
+   `ssh-keygen -lf /etc/ssh/ssh_host_*_key.pub` on the server.
+4. Add a command, pick the host, then assign it to a tile or place a widget.
+
+## Security model
+
+- The private key is generated on the device and stored encrypted with a non-exportable AES key in
+  the Android Keystore. Backups are disabled; the key and database never leave the device.
+- Host keys are trust-on-first-use: an unknown key is only accepted from the *Test connection*
+  dialog, never from a tile or widget. A changed host key refuses the connection until you forget
+  the saved key in the host's edit screen.
+- Tiles require the device to be unlocked before running anything.
+
+## Building
+
+Requires JDK 17+ and an Android SDK with platform 37 (the build downloads matching build-tools).
+
+```sh
+export JAVA_HOME=/usr/lib/jvm/java-21-openjdk   # or any JDK 17+
+export ANDROID_HOME=~/Android/Sdk               # or set sdk.dir in local.properties
+./gradlew assembleDebug testDebugUnitTest
+adb install app/build/outputs/apk/debug/app-debug.apk
+```
+
+Unit tests cover the host-key verifier and the SSH runner against an in-process Apache MINA
+server, so no device is needed for them.
+
+## Stack
+
+Kotlin, Jetpack Compose (Material 3), Glance widgets, Room, WorkManager, [sshj](https://github.com/hierynomus/sshj)
+with BouncyCastle. minSdk 29.
