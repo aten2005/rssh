@@ -4,4 +4,7 @@
 
 
 
+    <string name="notification_channel_running">Running commands</string>
+    <string name="notification_running">Running SSH command…</string>
+    <string name="toast_command_missing">✗ Command no longer exists</string>
 </resources>
