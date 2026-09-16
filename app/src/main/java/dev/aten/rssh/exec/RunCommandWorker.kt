@@ -17,12 +17,16 @@ class RunCommandWorker(context: Context, params: WorkerParameters) : CoroutineWo
 
     override suspend fun doWork(): Result {
         val container = applicationContext.appContainer
-        val bound = container.db.commands().getWithHost(inputData.getLong(KEY_COMMAND_ID, -1))
+        val commandId = inputData.getLong(KEY_COMMAND_ID, -1)
+        val bound = container.db.commands().getWithHost(commandId)
         if (bound == null) {
+            container.runStates.finished(commandId, ok = false, summary = ResultFormatter.MISSING)
             toast(applicationContext.getString(R.string.toast_command_missing))
             return Result.failure()
         }
+        container.runStates.running(commandId)
         val outcome = container.runner.run(bound.host, bound.command.command, bound.command.timeoutSec)
+        container.runStates.finished(commandId, ok = ResultFormatter.isOk(outcome), summary = ResultFormatter.short(outcome))
         toast(ResultFormatter.format(bound.command.label, outcome))
         return Result.success()
     }

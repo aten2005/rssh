@@ -4,6 +4,7 @@
 
     <string name="tile_unassigned">rssh %1$d</string>
     <string name="tile_tap_to_set_up">Tap to set up</string>
+    <string name="tile_running">Running…</string>
     <string name="tile_label_1">rssh 1</string>
     <string name="tile_label_2">rssh 2</string>
     <string name="tile_label_3">rssh 3</string>

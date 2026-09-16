@@ -10,7 +10,9 @@ Configure hosts and commands in the app, then:
   the launcher's pin dialog. Renaming the command relabels the shortcut; deleting it disables the
   shortcut.
 
-Each run ends with a toast: `✓ label: first line of output` or `✗ label (exit N): error`.
+Each run ends with a toast: `✓ label: first line of output` or `✗ label (exit N): error`. While
+the Quick Settings panel is open, the tile itself also shows *Running…* (greyed out, so it can't
+be tapped twice) and then a short result for a few seconds before returning to the host name.
 
 ## Setup
 
@@ -43,7 +45,8 @@ adb install app/build/outputs/apk/debug/app-debug.apk
 ```
 
 Unit tests cover the host-key verifier and the SSH runner against an in-process Apache MINA
-server, so no device is needed for them.
+server, plus the tile state mapping, run-state store and result formatting, so no device is
+needed for them.
 
 GitHub Actions runs the same build on every push and pull request and uploads the debug APK as
 the `rssh-debug-apk` artifact. Pushing a `v*` tag also attaches it to a GitHub release. Debug

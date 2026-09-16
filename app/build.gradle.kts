@@ -88,5 +88,6 @@ dependencies {
     implementation(libs.bouncycastle.pkix)
 
     testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.mina.sshd.core)
 }
