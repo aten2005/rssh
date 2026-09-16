@@ -3,9 +3,13 @@ package dev.aten.rssh
 import android.app.Application
 import android.content.Context
 import dev.aten.rssh.data.AppDatabase
+import dev.aten.rssh.exec.RunStateStore
 import dev.aten.rssh.ssh.KeyManager
 import dev.aten.rssh.ssh.SshRunner
 import java.security.Security
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import org.bouncycastle.jce.provider.BouncyCastleProvider
 
 class RsshApp : Application() {
@@ -25,6 +29,7 @@ class AppContainer(app: Application) {
     val db = AppDatabase.get(app)
     val keyManager = KeyManager(app)
     val runner = SshRunner(keyManager::loadKeyPair)
+    val runStates = RunStateStore(CoroutineScope(SupervisorJob() + Dispatchers.Default))
 }
 
 val Context.appContainer: AppContainer

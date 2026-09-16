@@ -4,16 +4,16 @@
 
     <string name="tile_unassigned">rssh %1$d</string>
     <string name="tile_tap_to_set_up">Tap to set up</string>
+    <string name="tile_running">Running…</string>
     <string name="tile_label_1">rssh 1</string>
     <string name="tile_label_2">rssh 2</string>
     <string name="tile_label_3">rssh 3</string>
     <string name="tile_label_4">rssh 4</string>
     <string name="tile_label_5">rssh 5</string>
 
-    <string name="widget_label">rssh command</string>
-    <string name="widget_description">Runs a saved SSH command with one tap</string>
-    <string name="widget_unassigned">rssh</string>
-    <string name="widget_tap_to_set_up">Tap to set up</string>
+
+    <string name="shortcut_disabled">Command was deleted</string>
+    <string name="shortcut_unsupported">Your launcher doesn\'t support pinned shortcuts</string>
 
     <string name="notification_channel_running">Running commands</string>
     <string name="notification_running">Running SSH command…</string>

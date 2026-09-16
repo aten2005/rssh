@@ -85,7 +85,7 @@ fun CommandEditScreen(commandId: Long, onDone: () -> Unit) {
     suspend fun save(): Long {
         val rowId = db.commands().upsert(Command(id, hostId, label.trim(), command.trim(), timeoutSec ?: 30))
         if (id == 0L) id = rowId
-        Shortcuts.refresh(context)
+        Surfaces.refresh(context)
         return id
     }
 
@@ -162,12 +162,12 @@ fun CommandEditScreen(commandId: Long, onDone: () -> Unit) {
         AlertDialog(
             onDismissRequest = { confirmDelete = false },
             title = { Text("Delete command?") },
-            text = { Text("Tiles and widgets using it are cleared.") },
+            text = { Text("Tiles using it are cleared and its shortcuts are disabled.") },
             confirmButton = {
                 TextButton(onClick = {
                     scope.launch {
                         db.commands().get(id)?.let { db.commands().delete(it) }
-                        Shortcuts.refresh(context)
+                        Surfaces.refresh(context)
                         onDone()
                     }
                 }) { Text("Delete") }

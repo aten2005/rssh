@@ -1,8 +1,10 @@
 package dev.aten.rssh.ui
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,6 +13,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.PlayArrow
@@ -44,10 +47,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.aten.rssh.R
 import dev.aten.rssh.appContainer
 import dev.aten.rssh.data.TILE_SLOT_COUNT
 import dev.aten.rssh.data.TileSlot
 import dev.aten.rssh.exec.CommandLauncher
+import dev.aten.rssh.shortcut.CommandShortcuts
 import dev.aten.rssh.tile.BaseSlotTileService
 import kotlinx.coroutines.launch
 
@@ -121,8 +126,17 @@ private fun CommandsTab(onOpen: (Long) -> Unit) {
                     Text("${bound.host.name} · ${bound.command.command}", maxLines = 1, overflow = TextOverflow.Ellipsis)
                 },
                 trailingContent = {
-                    IconButton(onClick = { CommandLauncher.enqueue(context, bound.command.id) }) {
-                        Icon(Icons.Filled.PlayArrow, contentDescription = "Run")
+                    Row {
+                        IconButton(onClick = {
+                            if (!CommandShortcuts.requestPin(context, bound)) {
+                                Toast.makeText(context, R.string.shortcut_unsupported, Toast.LENGTH_SHORT).show()
+                            }
+                        }) {
+                            Icon(Icons.Filled.Home, contentDescription = "Add to home screen")
+                        }
+                        IconButton(onClick = { CommandLauncher.enqueue(context, bound.command.id) }) {
+                            Icon(Icons.Filled.PlayArrow, contentDescription = "Run")
+                        }
                     }
                 },
                 modifier = Modifier.clickable { onOpen(bound.command.id) },
@@ -175,8 +189,8 @@ private fun TilesTab() {
 
     Column(Modifier.verticalScroll(rememberScrollState())) {
         Text(
-            "Each tile runs one command. Add the tiles \"rssh 1\"–\"rssh 5\" from the Quick Settings editor; " +
-                "the home-screen widget is added from your launcher's widget picker.",
+            "Each tile runs one command. Add the tiles \"rssh 1\"–\"rssh 5\" from the Quick Settings editor. " +
+                "To put a command on the home screen instead, use the home icon on the Commands tab.",
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.padding(16.dp),
         )
